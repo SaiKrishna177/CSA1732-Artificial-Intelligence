@@ -1,0 +1,35 @@
+def is_consistent(node, color, coloring, graph):
+    for neighbor in graph[node]:
+        if neighbor in coloring and coloring[neighbor] == color:
+            return False
+    return True
+
+def backtrack(coloring, nodes, colors, graph):
+    if len(coloring) == len(nodes):
+        return coloring
+    node = nodes[len(coloring)]
+    for color in colors:
+        if is_consistent(node, color, coloring, graph):
+            coloring[node] = color
+            result = backtrack(coloring, nodes, colors, graph)
+            if result:
+                return result
+            del coloring[node]
+    return None
+
+def map_coloring(graph, colors):
+    nodes = list(graph.keys())
+    coloring = {}
+    return backtrack(coloring, nodes, colors, graph)
+graph = {
+    'WA': ['NT', 'SA'],
+    'NT': ['WA', 'SA', 'Q'],
+    'SA': ['WA', 'NT', 'Q', 'NSW', 'V'],
+    'Q': ['NT', 'SA', 'NSW'],
+    'NSW': ['Q', 'SA', 'V'],
+    'V': ['SA', 'NSW']
+}
+colors = ['Red', 'Green', 'Blue']
+
+solution = map_coloring(graph, colors)
+print(solution)
