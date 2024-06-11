@@ -1,0 +1,33 @@
+class VacuumCleaner:
+    def _init_(self, location='A'):
+        self.location = location
+        self.cleaned = []
+
+    def clean(self, room):
+        print("Vacuum cleaner starts cleaning...")
+        while room.dirty:
+            if self.location == 'A':
+                print("Vacuum cleaner moves to room A.")
+                self.cleaned.append('A')
+                room.clean('A')
+                self.location = 'B'
+            else:
+                print("Vacuum cleaner moves to room B.")
+                self.cleaned.append('B')
+                room.clean('B')
+                self.location = 'A'
+        print("Room is clean now.")
+
+class Room:
+    def _init_(self):
+        self.dirty = True
+
+    def clean(self, location):
+        print(f"Room {location} is now clean.")
+        self.dirty = False
+
+if _name_ == "_main_":
+    room = Room()
+    vacuum = VacuumCleaner()
+
+    vacuum.clean(room)
